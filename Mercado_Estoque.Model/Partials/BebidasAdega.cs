@@ -7,15 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace Mercado_Estoque.Model.Partials
+namespace Mercado_Estoque.Model.Models
 {
-    [ModelMetadataType(typeof(MD_Acougue))]
-    public partial class Acougue
+    [ModelMetadataType(typeof(MD_BebidasAdega))]
+    public partial class BebidasAdega
     {
-        public class MD_Acougue
+        class MD_BebidasAdega
         {
+            [Display(Name = "ID")]
+            public int ProdutoId { get; set; }
             [Display(Name = "ID da Marca")]
-            public int MarcaID { get; set; }
+            public int MarcaId { get; set; }
             [Display(Name = "Condição")]
             public string Condicao { get; set; } = null!;
             [Display(Name = "Preço")]
