@@ -25,12 +25,6 @@ namespace Mercado_Estoque.ViewModel
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
             public DateTime DataValidade { get; set; }
         
-
-
-        public AcougueVM()
-        {
-
-        }
         
     }
 
