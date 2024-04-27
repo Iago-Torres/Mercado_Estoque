@@ -26,6 +26,9 @@ namespace Mercado_Estoque.Model.Models
             public DateTime DataFabricacao { get; set; }
             [Display(Name = "Válido até")]
             public DateTime DataValidade { get; set; }
+
+            public string Nome { get; set; } = null!;
+            public int? Quantidade { get; set; }
         }
 
     }

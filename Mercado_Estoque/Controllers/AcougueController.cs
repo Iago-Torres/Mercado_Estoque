@@ -1,4 +1,5 @@
 ﻿using Mercado_Estoque.Model.Models;
+using Mercado_Estoque.Model.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
@@ -10,8 +11,21 @@ namespace Mercado_Estoque.Controllers
         public async Task<IActionResult> Index()
         {
             var db = new MercadoestoqueContext();
-            return View(await db.Acougues.ToListAsync());
+            var acougues = await db.Acougues.ToListAsync();
+            var acouguesVM = acougues.Select(acougue => new AcougueVM
+            {
+                ProdutoId = acougue.ProdutoId,
+                MarcaId = acougue.MarcaId,
+                Nome = acougue.Nome,
+                Preco = acougue.Preco,
+                Condicao = acougue.Condicao,
+                DataFabricacao = (DateTime)(acougue?.DataFabricacao),
+                DataValidade = acougue.DataValidade
+            });
+
+            return View(acouguesVM);
         }
+
         public IActionResult Create()
         {
             return View();

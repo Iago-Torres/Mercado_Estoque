@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
+using Mercado_Estoque.Model.Models;
+using Mercado_Estoque.Model.ViewModel;
 
 namespace Mercado_Estoque.Controllers
 {
@@ -10,8 +12,22 @@ namespace Mercado_Estoque.Controllers
         public async Task<IActionResult> Index()
         {
             var db = new MercadoestoqueContext();
-            return View(await db.Biscoitos.ToListAsync());
+            var biscoitos = await db.Biscoitos.ToListAsync();
+            var biscoitosVM = biscoitos.Select(biscoito => new BiscoitoVM
+            {
+
+                ProdutoId = biscoito.ProdutoId,
+                Nome = biscoito.Nome,
+                MarcaId = biscoito.MarcaId,
+                Preco = biscoito.Preco,
+                Condicao = biscoito.Condicao,
+                DataFabricacao = (DateTime)(biscoito?.DataFabricacao),
+                DataValidade = biscoito.DataValidade
+            });
+
+            return View(biscoitosVM);
         }
+
         public IActionResult Create()
         {
             return View();

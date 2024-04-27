@@ -1,6 +1,8 @@
 ﻿using Mercado_Estoque.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Mercado_Estoque.Model.Models;
+using Mercado_Estoque.Model.ViewModel;
 
 namespace Mercado_Estoque.Controllers
 {
@@ -9,8 +11,21 @@ namespace Mercado_Estoque.Controllers
         public async Task<IActionResult> Index()
         {
             var db = new MercadoestoqueContext();
-            return View(await db.BebidasAdegas.ToListAsync());
+            var bebidas = await db.BebidasAdegas.ToListAsync();
+            var bebidasVM = bebidas.Select(bebida => new BebidasAdegaVM
+            {
+                ProdutoId = bebida.ProdutoId,
+                MarcaId = bebida.MarcaId,
+                Nome = bebida.Nome,
+                Preco = bebida.Preco,
+                Condicao = bebida.Condicao,
+                DataFabricacao = (DateTime)(bebida?.DataFabricacao),
+                DataValidade = bebida.DataValidade
+            });
+
+            return View(bebidasVM);
         }
+
         public IActionResult Create()
         {
             return View();

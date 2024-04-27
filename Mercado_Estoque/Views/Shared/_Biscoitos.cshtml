@@ -1,0 +1,38 @@
+﻿@using Mercado_Estoque.Model.ViewModel;
+@model IEnumerable<BiscoitoVM>
+
+<h2> Lista de Biscoitos</h2>
+<table id="tabela" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID do Produto</th>
+            <th>ID da Marca</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Condição</th>
+            <th>Fabricado em</th>
+            <th>Válido até</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var biscoitoVM in Model)
+        {
+            <tr>
+                <td>@biscoitoVM.ProdutoId</td>
+                <td>@biscoitoVM.MarcaId</td>
+                <td>@biscoitoVM.Nome</td>
+                <td>@biscoitoVM.Preco</td>
+                <td>@biscoitoVM.Quantidade</td>
+                <td>@biscoitoVM.Condicao</td>
+                <td>@biscoitoVM.DataFabricacao</td>
+                <td>@biscoitoVM.DataValidade</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = biscoitoVM.ProdutoId }) |
+                    @Html.ActionLink("Details", "Details", new { id = biscoitoVM.ProdutoId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = biscoitoVM.ProdutoId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

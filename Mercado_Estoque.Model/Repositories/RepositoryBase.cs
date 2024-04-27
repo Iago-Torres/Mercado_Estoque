@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mercado_Estoque.Model.Interfaces;
 using Mercado_Estoque.Model.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mercado_Estoque.Model.Repositories
 {
@@ -66,9 +67,10 @@ namespace Mercado_Estoque.Model.Repositories
             }
         }
 
-        public Task ExcluirAsync(params object[] variavel)
+        public async Task ExcluirAsync(params object[] variavel)
         {
-            throw new NotImplementedException();
+            var obj = await _context.Set<T>().FindAsync(variavel);
+            await ExcluirAsync(obj!);
         }
 
         public T Incluir(T obj)
@@ -81,29 +83,36 @@ namespace Mercado_Estoque.Model.Repositories
             return obj;
         }
 
-        public Task<T> IncluirAsync(T obj)
+        public async Task<T> IncluirAsync(T obj)
         {
-            throw new NotImplementedException();
+           await _context.Set<T>().AddAsync(obj);
+            if (_saveChanges)
+            {
+               await _context.SaveChangesAsync();
+            }
+            return obj;
         }
 
         public T SelecionarChave(params object[] variavel)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Find(variavel)!;
+            
+        } 
+
+        public async Task<T> SelecionarChaveAsync(params object[] variavel)
+        {
+            return await _context.Set<T>().FindAsync(variavel);
         }
 
-        public List<T> SelecionarChave()
+        public List<T> SelecionarTodos()
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().ToList();
         }
 
-        public Task<T> SelecionarChaveAsync(params object[] variavel)
+        public async Task<List<T>> SelecionarTodosAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().ToListAsync();
         }
 
-        public Task<T> SelecionarTodosAsync()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
