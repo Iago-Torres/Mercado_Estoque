@@ -37,7 +37,6 @@ namespace Mercado_Estoque.Controllers
             var db = new MercadoestoqueContext();
             if (!ModelState.IsValid)
             {
-                //db.Entry<Unidade>(unidade);
                 db.Entry(congelados).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                 await db.SaveChangesAsync();
                 ViewData["Mensagem"] = "Dados Salvos com Sucesso =)";
